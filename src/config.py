@@ -1,5 +1,6 @@
-import os 
+import os
 from dataclasses import dataclass
+
 
 @dataclass
 class Settings:
@@ -11,8 +12,6 @@ class Settings:
     db_password: str = os.getenv("DB_PASSWORD", "etl_pass")
     per_page: int = int(os.getenv("PER_PAGE", 50))
     max_pages: int = int(os.getenv("MAX_PAGES", 5))
-
-
 
 
 settings = Settings()
