@@ -1,23 +1,47 @@
-### Olá eu sou o Gustavo Dutra 👋
+# Projeto ETL com Docker + Python + PostgreSQL
 
-- 🔭 Hoje eu trabalho como Data Science 🎲
+## Objetivo
+Consumir dados da API pública Open Brewery DB, transformar os dados e carregar em PostgreSQL.
 
+## Stack
+- Python 3.11
+- Docker
+- Docker Compose
+- PostgreSQL
 
-### My stats ⭐
+## Estrutura
+- `src/extract.py`: extração da API
+- `src/transform.py`: limpeza e transformação
+- `src/load.py`: carga no banco
+- `src/main.py`: orquestração do ETL
+- `lecture/lecture.tex`: material teórico em LaTeX
 
-<div align="center">
-<img alt="Gustavo GitHub stats" src="https://github-readme-stats.vercel.app/api?username=snowdutra&show_icons=true&theme=transparent"/>
-<img alt="Top langs" src="https://github-readme-stats.vercel.app/api/top-langs/?username=snowdutra&layout=compact&&langs_count=8"/>
-</div>
+## Como executar
 
-### Minhas linguagens 🗽
+### 1. Subir containers
+```bash
+docker compose up --build
+```
 
- <div style="display: inline_block"><br>
-  <img align="center" alt="Dutra-Python" height="30" width="40" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg">
-  <img align="center" alt="Dutra-MySQL" height="30" width="40" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-plain-wordmark.svg">  
-  <img align="center" alt="Dutra-Java" height="30" width="40" 
-src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-plain.svg">
-   <img align="center" alt="Dutra-Js" height="30" width="40" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-plain.svg">    
-  <img align="center" alt="Dutra-HTML" height="30" width="40" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original.svg">
-  <img align="center" alt="Dutra-CSS" height="30" width="40" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original.svg">
+### 2. Ver logs
+```bash
+docker compose logs -f etl_app
+```
 
+### 3. Acessar o banco
+```bash
+docker exec -it etl_postgres psql -U etl_user -d etl_db
+```
+
+### 4. Consultar dados
+```sql
+SELECT COUNT(*) FROM breweries;
+SELECT * FROM breweries LIMIT 10;
+```
+
+## Melhorias possíveis
+- incluir tabela staging
+- incluir logs estruturados
+- adicionar testes unitários
+- agendar execução com cron ou Airflow
+- persistir dados brutos em JSON

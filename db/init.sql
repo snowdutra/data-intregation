@@ -1,16 +1,17 @@
 CREATE TABLE IF NOT EXISTS breweries (
-    brewery_id TEXT PRIMARY KEY,
-    name TEXT NOT NULL,
-    brewery_type TEXT,
-    street TEXT,
-    city TEXT,
-    state TEXT,
-    postal_code TEXT,
-    country TEXT,
+    brewery_id VARCHAR(50) PRIMARY KEY,
+    name VARCHAR(255),
+    brewery_type VARCHAR(100),
+    street VARCHAR(255),
+    city VARCHAR(100),
+    state VARCHAR(100),
+    postal_code VARCHAR(30),
+    country VARCHAR(100),
     longitude DOUBLE PRECISION,
     latitude DOUBLE PRECISION,
-    phone TEXT,
+    phone VARCHAR(50),
     website_url TEXT,
-    state_province TEXT,
-    updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP
+    state_province VARCHAR(100),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

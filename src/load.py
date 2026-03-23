@@ -1,27 +1,17 @@
 from typing import List, Dict, Any
-import time
 import psycopg2
 from psycopg2.extras import execute_batch
 from config import settings
 
 
 def get_connection():
-    last_error = None
-    for attempt in range(1, 11):
-        try:
-            return psycopg2.connect(
-                host=settings.db_host,
-                port=settings.db_port,
-                dbname=settings.db_name,
-                user=settings.db_user,
-                password=settings.db_password
-            )
-        except Exception as exc:
-            last_error = exc
-            print(f"[load] aguardando banco ficar pronto ({attempt}/10): {exc}")
-            time.sleep(2)
-
-    raise RuntimeError(f"Nao foi possivel conectar ao banco apos 10 tentativas: {last_error}")
+    return psycopg2.connect(
+        host=settings.db_host,
+        port=settings.db_port,
+        dbname=settings.db_name,
+        user=settings.db_user,
+        password=settings.db_password
+    )
 
 
 def load_data(records: List[Dict[str, Any]]) -> None:
