@@ -1,17 +1,32 @@
 from typing import List, Dict, Any
+import time
 import psycopg2
 from psycopg2.extras import execute_batch
 from config import settings
 
 
 def get_connection():
-    return psycopg2.connect(
-        host=settings.db_host,
-        port=settings.db_port,
-        dbname=settings.db_name,
-        user=settings.db_user,
-        password=settings.db_password
-    )
+    max_attempts = 8
+
+    for attempt in range(1, max_attempts + 1):
+        try:
+            return psycopg2.connect(
+                host=settings.db_host,
+                port=settings.db_port,
+                dbname=settings.db_name,
+                user=settings.db_user,
+                password=settings.db_password
+            )
+        except psycopg2.OperationalError as exc:
+            if attempt == max_attempts:
+                raise
+
+            wait_seconds = min(2 ** (attempt - 1), 10)
+            print(
+                f"[load] banco indisponível (tentativa {attempt}/{max_attempts}): {exc}. "
+                f"Nova tentativa em {wait_seconds}s..."
+            )
+            time.sleep(wait_seconds)
 
 
 def load_data(records: List[Dict[str, Any]]) -> None:
