@@ -18,19 +18,29 @@ Consumir dados da API pública Open Brewery DB, transformar os dados e carregar 
 
 ## Como executar
 
-### 1. Subir containers
+### 0. Preparar variaveis de ambiente
 ```bash
-docker compose up --build
+cp .env.example .env
+```
+No Windows PowerShell:
+```powershell
+Copy-Item .env.example .env
+```
+Se quiser trocar credenciais, edite DB_NAME, DB_USER e DB_PASSWORD no .env antes de subir os containers.
+
+### 1. Subir PostgreSQL
+```bash
+docker compose up -d postgres
 ```
 
-### 2. Ver logs
+### 2. Executar o ETL
 ```bash
-docker compose logs -f etl_app
+docker compose run --rm etl_app
 ```
 
 ### 3. Acessar o banco
 ```bash
-docker exec -it etl_postgres psql -U etl_user -d etl_db
+docker exec -it etl_postgres psql -U <DB_USER> -d <DB_NAME>
 ```
 
 ### 4. Consultar dados
@@ -38,6 +48,14 @@ docker exec -it etl_postgres psql -U etl_user -d etl_db
 SELECT COUNT(*) FROM breweries;
 SELECT * FROM breweries LIMIT 10;
 ```
+
+## Entregaveis do projeto
+- codigo-fonte em src/
+- script SQL em db/init.sql
+- docker-compose.yml e Dockerfile
+- requirements.txt
+- README com instrucoes de execucao e validacao
+- .env.example para reproducao local
 
 ## Melhorias possíveis
 - incluir tabela staging
