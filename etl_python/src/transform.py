@@ -2,6 +2,7 @@ from typing import List, Dict, Any, Optional
 
 
 def safe_str(value: Any) -> Optional[str]:
+    # Normaliza campos textuais removendo espaços e convertendo vazio para None.
     if value is None:
         return None
     text = str(value).strip()
@@ -9,6 +10,7 @@ def safe_str(value: Any) -> Optional[str]:
 
 
 def safe_float(value: Any) -> Optional[float]:
+    # Converte valores numéricos de forma segura, preservando nulos em falha.
     if value is None or value == "":
         return None
     try:
@@ -18,6 +20,7 @@ def safe_float(value: Any) -> Optional[float]:
 
 
 def transform_record(record: Dict[str, Any]) -> Dict[str, Any]:
+    # Mapeia o payload bruto da API para o schema da tabela breweries.
     return {
         "brewery_id": safe_str(record.get("id")),
         "name": safe_str(record.get("name")),
@@ -36,6 +39,7 @@ def transform_record(record: Dict[str, Any]) -> Dict[str, Any]:
 
 
 def transform_all(raw_data: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    # Descarta registros sem chave de negócio (brewery_id) ou sem nome.
     transformed = []
     skipped = 0
 

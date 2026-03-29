@@ -5,6 +5,7 @@ from config import settings
 
 
 def fetch_page(page: int, per_page: int) -> List[Dict[str, Any]]:
+    # Consulta uma página da API com retry para tolerar falhas temporárias.
     url = settings.api_base_url
     params = {"page": page, "per_page": per_page}
 
@@ -26,6 +27,7 @@ def fetch_page(page: int, per_page: int) -> List[Dict[str, Any]]:
 
 
 def extract_all() -> List[Dict[str, Any]]:
+    # Acumula páginas até o limite configurado ou até a API retornar página vazia.
     all_data = []
 
     for page in range(1, settings.max_pages + 1):

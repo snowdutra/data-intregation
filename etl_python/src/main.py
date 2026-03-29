@@ -4,6 +4,7 @@ from load import load_data
 
 
 def run_etl() -> None:
+    # Executa o pipeline em ordem: extração, transformação e carga.
     print("[main] iniciando pipeline ETL...")
     raw_data = extract_all()
     transformed_data = transform_all(raw_data)

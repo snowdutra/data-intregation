@@ -7,6 +7,7 @@ from config import settings
 
 
 def _request_json(url: str, params: Dict[str, Any]) -> Any:
+    # Implementa retry com backoff exponencial para resiliencia a falhas transientes.
     for attempt in range(1, settings.wb_retry_attempts + 1):
         try:
             response = requests.get(url, params=params, timeout=settings.wb_request_timeout)
@@ -27,6 +28,7 @@ def _request_json(url: str, params: Dict[str, Any]) -> Any:
 
 
 def _validate_indicator_payload(payload: Any) -> Tuple[Dict[str, Any], List[Dict[str, Any]]]:
+    # Garante contrato [metadata, data] antes de seguir para a etapa de transformacao.
     if not isinstance(payload, list) or len(payload) < 2:
         raise ValueError("Resposta da API de indicadores fora do formato esperado [meta, data].")
 
@@ -38,6 +40,7 @@ def _validate_indicator_payload(payload: Any) -> Tuple[Dict[str, Any], List[Dict
 
 
 def _validate_country_payload(payload: Any) -> Tuple[Dict[str, Any], List[Dict[str, Any]]]:
+    # Garante contrato [metadata, data] para a carga de dimensao de paises.
     if not isinstance(payload, list) or len(payload) < 2:
         raise ValueError("Resposta da API de paises fora do formato esperado [meta, data].")
 
@@ -60,6 +63,7 @@ def extract_countries() -> List[Dict[str, Any]]:
     first_payload = _request_json(url, params)
     first_meta, first_data = _validate_country_payload(first_payload)
 
+    # Acumula todas as paginas em memoria para consolidar a dimensao de paises.
     all_rows: List[Dict[str, Any]] = list(first_data)
     total_pages = min(int(first_meta.get("pages", 1)), settings.wb_max_pages)
 
@@ -89,6 +93,7 @@ def extract_indicator(indicator_code: str) -> List[Dict[str, Any]]:
     first_payload = _request_json(url, params)
     first_meta, first_data = _validate_indicator_payload(first_payload)
 
+    # Acumula a serie historica paginada de um indicador.
     all_rows: List[Dict[str, Any]] = list(first_data)
     total_pages = min(int(first_meta.get("pages", 1)), settings.wb_max_pages)
 

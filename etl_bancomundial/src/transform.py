@@ -114,6 +114,7 @@ def transform_facts(
     raw_rows: List[Dict[str, Any]],
     allowed_iso2: set[str],
 ) -> List[Dict[str, Any]]:
+    # Indexa fatos pela chave natural para deduplicar e preparar upsert idempotente.
     deduped: Dict[Tuple[str, str, int], Dict[str, Any]] = {}
     duplicates = 0
     skipped = 0
@@ -127,7 +128,7 @@ def transform_facts(
         indicator_code = (_safe_str(indicator.get("id")) or "").upper()
         year = _safe_int(row.get("date"))
 
-        # T1: descarta agregados e entidades nao-pais com ISO2 invalido.
+        # Mantem apenas paises validos (ISO2 real) presentes na dimensao filtrada.
         if not _is_real_iso2(iso2) or iso2 not in allowed_iso2:
             skipped += 1
             continue
@@ -136,7 +137,7 @@ def transform_facts(
             skipped += 1
             continue
 
-        # T4: mantem somente o intervalo temporal requerido.
+        # Restringe a serie ao intervalo configurado e evita anos futuros.
         if year is None or year < settings.min_year or year > min(settings.max_year, current_year):
             skipped += 1
             continue
@@ -151,6 +152,7 @@ def transform_facts(
 
         if key in deduped:
             duplicates += 1
+        # Em conflito de chave, preserva a ultima ocorrencia processada.
         deduped[key] = fact
 
     print(f"[transform] wdi_facts total={len(deduped)}")

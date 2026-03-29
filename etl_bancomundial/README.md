@@ -60,12 +60,18 @@ As regras T1-T5 estao implementadas em src/transform.py.
 
 ## Como executar
 
-1. Entrar na pasta do projeto:
+1. Clonar o repositorio:
+
+```bash
+git clone https://github.com/snowdutra/data-intregation.git
+```
+
+2. Entrar na pasta do projeto:
 ```bash
 cd etl_bancomundial
 ```
 
-2. Preparar variaveis de ambiente:
+3. Preparar variaveis de ambiente:
 
 Linux/macOS:
 ```bash
@@ -84,17 +90,15 @@ Copy-Item .env.example .env
 
 Se quiser trocar credenciais, edite DB_NAME, DB_USER e DB_PASSWORD no .env antes de subir os containers.
 
-3. Subir o PostgreSQL:
+4. Subir todo o ambiente com um unico comando (recomendado):
 
 ```bash
-docker compose up -d postgres
+docker compose up --build
 ```
 
-4. Executar o ETL:
-
-```bash
-docker compose run --rm etl_app
-```
+Opcional para execucao em duas etapas:
+- subir apenas banco: `docker compose up -d postgres`
+- executar ETL: `docker compose run --rm etl_app`
 
 5. Acessar banco para validacao:
 

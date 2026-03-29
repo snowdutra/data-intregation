@@ -93,6 +93,7 @@ def _upsert_facts(session: Session, rows: List[Dict[str, Any]]) -> None:
         return
 
     stmt = pg_insert(WdiFact)
+    # Conflitos na PK composta atualizam o fato existente em vez de inserir duplicado.
     stmt = stmt.on_conflict_do_update(
         index_elements=[WdiFact.iso2_code, WdiFact.indicator_code, WdiFact.year],
         set_={
@@ -111,6 +112,7 @@ def load_all(
     engine = _get_engine()
 
     with Session(engine) as session:
+        # Carrega dimensoes primeiro para garantir resolucao das FKs em wdi_facts.
         with session.begin():
             _upsert_countries(session, countries_rows)
         with session.begin():

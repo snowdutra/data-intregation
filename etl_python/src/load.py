@@ -6,6 +6,7 @@ from config import settings
 
 
 def get_connection():
+    # Tenta conectar ao PostgreSQL com backoff para acompanhar o startup do container.
     max_attempts = 8
 
     for attempt in range(1, max_attempts + 1):
@@ -87,6 +88,7 @@ def load_data(records: List[Dict[str, Any]]) -> None:
     try:
         conn = get_connection()
         with conn.cursor() as cursor:
+            # Envia em lote para reduzir round-trips e manter boa performance.
             execute_batch(cursor, sql, records, page_size=100)
         conn.commit()
         print(f"[load] {len(records)} registros carregados com sucesso.")

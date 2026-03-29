@@ -10,6 +10,7 @@ load_dotenv()
 
 @dataclass
 class Settings:
+    # Parametros de extracao na API do Banco Mundial.
     wb_api_base_url: str = os.getenv("WB_API_BASE_URL", "https://api.worldbank.org/v2")
     wb_indicator_codes: str = os.getenv(
         "WB_INDICATOR_CODES",
@@ -27,6 +28,7 @@ class Settings:
     max_year: int = int(os.getenv("MAX_YEAR", datetime.now().year))
     allowed_income_groups: str = os.getenv("ALLOWED_INCOME_GROUPS", "LIC,MIC,HIC")
 
+    # Parametros de conexao com o banco de destino.
     db_host: str = os.getenv("DB_HOST", "localhost")
     db_port: int = int(os.getenv("DB_PORT", 5433))
     db_name: str = os.getenv("DB_NAME", "etl_db")
@@ -43,6 +45,7 @@ class Settings:
 
     @property
     def sqlalchemy_database_url(self) -> str:
+        # DSN usada pelo SQLAlchemy para criar engine e sessoes transacionais.
         return (
             f"postgresql+psycopg://{self.db_user}:{self.db_password}@"
             f"{self.db_host}:{self.db_port}/{self.db_name}"
