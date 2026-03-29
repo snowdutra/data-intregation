@@ -66,9 +66,11 @@ As regras T1-T5 estao implementadas em src/transform.py.
 git clone https://github.com/snowdutra/data-intregation.git
 ```
 
-2. Entrar na pasta do projeto:
+2. Entrar na pasta clonada e abrir o projeto:
+
 ```bash
-cd etl_bancomundial
+cd data-intregation/etl_bancomundial
+code .
 ```
 
 3. Preparar variaveis de ambiente:
