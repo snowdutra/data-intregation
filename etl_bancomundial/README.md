@@ -59,32 +59,45 @@ As regras T1-T5 estao implementadas em src/transform.py.
 - T5 Deduplicacao: remove duplicatas por (iso2, indicator_code, year), mantendo a versao mais recente encontrada e registrando quantidade em log.
 
 ## Como executar
+
 1. Entrar na pasta do projeto:
 ```bash
 cd etl_bancomundial
 ```
 
 2. Preparar variaveis de ambiente:
+
+Linux/macOS:
 ```bash
 cp .env.example .env
 ```
-No Windows PowerShell, se necessario:
+
+Windows CMD:
+```cmd
+copy .env.example .env
+```
+
+Windows PowerShell:
 ```powershell
 Copy-Item .env.example .env
 ```
+
 Se quiser trocar credenciais, edite DB_NAME, DB_USER e DB_PASSWORD no .env antes de subir os containers.
 
 3. Subir o PostgreSQL:
+
 ```bash
 docker compose up -d postgres
 ```
 
 4. Executar o ETL:
+
 ```bash
 docker compose run --rm etl_app
 ```
 
 5. Acessar banco para validacao:
+
 ```bash
 docker exec -it wb_postgres psql -U <DB_USER> -d <DB_NAME>
 ```
@@ -93,10 +106,13 @@ docker exec -it wb_postgres psql -U <DB_USER> -d <DB_NAME>
 As queries abaixo foram executadas apos a primeira execucao completa.
 
 ### 1) Volume de paises
+
 ```sql
 SELECT COUNT(*) FROM countries;
 ```
+
 Saida real:
+
 ```text
  count
 -------
@@ -105,13 +121,16 @@ Saida real:
 ```
 
 ### 2) Distribuicao por renda
+
 ```sql
 SELECT income_group, COUNT(*)
 FROM countries
 GROUP BY income_group
 ORDER BY 2 DESC;
 ```
+
 Saida real:
+
 ```text
  income_group | count
 --------------+-------
@@ -122,6 +141,7 @@ Saida real:
 ```
 
 ### 3) Volume e nulos por indicador
+
 ```sql
 SELECT indicator_code,
        COUNT(*) as obs,
@@ -130,7 +150,9 @@ FROM wdi_facts
 GROUP BY indicator_code
 ORDER BY indicator_code;
 ```
+
 Saida real:
+
 ```text
   indicator_code   | obs  | nulls
 -------------------+------+-------
@@ -143,6 +165,7 @@ Saida real:
 ```
 
 ### 4) PIB per capita de 5 paises
+
 ```sql
 SELECT c.name, f.year, f.value
 FROM wdi_facts f
@@ -151,9 +174,11 @@ WHERE f.indicator_code = 'NY.GDP.PCAP.KD'
   AND c.iso2_code IN ('BR','US','CN','DE','NG')
 ORDER BY c.name, f.year;
 ```
+
 Saida real (resumo): 50 linhas retornadas (5 paises x 10 anos).
 
 Trecho:
+
 ```text
 Brazil        | 2015 |  8936.1956
 ...
@@ -165,11 +190,15 @@ United States | 2024 | 66356.1707
 ```
 
 ### 5) Idempotencia apos segunda execucao
+
 Antes da segunda execucao:
+
 ```sql
 SELECT COUNT(*) AS before_count FROM wdi_facts;
 ```
+
 Saida real:
+
 ```text
  before_count
 --------------
@@ -178,9 +207,11 @@ Saida real:
 ```
 
 Depois da segunda execucao:
+
 ```sql
 SELECT COUNT(*) AS after_count FROM wdi_facts;
 ```
+
 Saida real:
 ```text
  after_count
@@ -191,13 +222,20 @@ Saida real:
 
 Resultado: contagem identica, sem duplicacao.
 
-## Decisoes tecnicas
+## Decisões tecnicas
+
 1. Foi usada API /country para dimensao de paises e /country/all/indicator/{id} para fatos, mantendo separacao clara entre dimensoes e fato.
+
 2. O filtro de renda mapeia LMC e UMC para MIC, para aderir ao recorte LIC/MIC/HIC pedido no enunciado.
+
 3. A carga foi implementada com SQLAlchemy ORM + postgres insert on_conflict_do_update, sem uso de psycopg2 direto no load.py.
+
 4. O upsert foi executado em lote via session.execute(stmt, lista), evitando loop de insert registro a registro.
+
 5. Cada tabela foi carregada em bloco transacional proprio com session.begin(), garantindo rollback automatico por tabela em caso de falha.
+
 6. O filtro temporal foi parametrizado por MIN_YEAR e MAX_YEAR para facilitar reproducao e auditoria.
+
 7. A chave composta em wdi_facts garante idempotencia e foi validada por reexecucao completa do pipeline.
 
 ## Checklist de aderencia ao enunciado
