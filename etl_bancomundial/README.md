@@ -4,13 +4,13 @@
 Este projeto implementa um pipeline ETL para montar uma base relacional de indicadores socioeconomicos do Banco Mundial.
 
 Problema resolvido:
-- carregar paises filtrados por grupos de renda LIC, MIC e HIC
-- carregar 5 indicadores obrigatorios da atividade
-- manter serie historica em banco PostgreSQL com reprocessamento idempotente
+- Carregar paises filtrados por grupos de renda LIC, MIC e HIC.
+- Carregar os 5 indicadores obrigatorios da atividade.
+- Manter a serie historica em PostgreSQL com reprocessamento idempotente.
 
 API utilizada:
-- endpoint de paises: /v2/country
-- endpoint de indicadores: /v2/country/all/indicator/{id}
+- Endpoint de paises: /v2/country
+- Endpoint de indicadores: /v2/country/all/indicator/{id}
 
 Indicadores obrigatorios implementados:
 - NY.GDP.PCAP.KD
@@ -47,7 +47,7 @@ As 3 tabelas estao definidas em db/init.sql.
 - PK composta: (iso2_code, indicator_code, year)
 
 Abordagem escolhida: ORM com DeclarativeBase no load.py.
-Justificativa: a atividade exige SQLAlchemy e upsert nas 3 tabelas; com ORM foi possivel manter mapeamento explicito, legibilidade da regra de upsert e reutilizar as entidades nas clausulas on_conflict_do_update.
+Justificativa: a atividade exige SQLAlchemy e upsert nas 3 tabelas. Com ORM, foi possivel manter mapeamento explicito, legibilidade na regra de upsert e reutilizacao das entidades nas clausulas on_conflict_do_update.
 
 ## Regras de transformacao
 As regras T1-T5 estao implementadas em src/transform.py.
@@ -71,6 +71,12 @@ git clone https://github.com/snowdutra/data-intregation.git
 ```bash
 cd data-intregation/etl_bancomundial
 code .
+```
+
+Se nao usar VS Code, execute apenas o comando abaixo e continue no terminal:
+
+```bash
+cd data-intregation/etl_bancomundial
 ```
 
 3. Preparar variaveis de ambiente:
@@ -109,7 +115,7 @@ docker exec -it wb_postgres psql -U <DB_USER> -d <DB_NAME>
 ```
 
 ## Consultas de validacao
-As queries abaixo foram executadas apos a primeira execucao completa.
+As consultas abaixo foram executadas apos a primeira execucao completa.
 
 ### 1) Volume de paises
 
@@ -230,7 +236,7 @@ Resultado: contagem identica, sem duplicacao.
 
 ## Decisões tecnicas
 
-1. Foi usada API /country para dimensao de paises e /country/all/indicator/{id} para fatos, mantendo separacao clara entre dimensoes e fato.
+1. Foi usada a API /country para a dimensao de paises e /country/all/indicator/{id} para fatos, mantendo separacao clara entre dimensoes e fato.
 
 2. O filtro de renda mapeia LMC e UMC para MIC, para aderir ao recorte LIC/MIC/HIC pedido no enunciado.
 

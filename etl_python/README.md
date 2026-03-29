@@ -1,7 +1,12 @@
-# Projeto ETL com Docker + Python + PostgreSQL
+# Projeto ETL com Docker, Python e PostgreSQL
 
-## Objetivo
-Consumir dados da API pública Open Brewery DB, transformar os dados e carregar em PostgreSQL.
+## Visao geral
+Este projeto implementa um pipeline ETL para consumir dados da Open Brewery DB API, transformar os registros e carregar o resultado em PostgreSQL.
+
+Problema resolvido:
+- Extrair dados paginados da API publica Open Brewery DB.
+- Aplicar limpeza e padronizacao dos campos.
+- Carregar os dados em lote no PostgreSQL.
 
 ## Stack
 - Python 3.11
@@ -10,21 +15,34 @@ Consumir dados da API pública Open Brewery DB, transformar os dados e carregar 
 - PostgreSQL
 
 ## Estrutura
-- `src/extract.py`: extração da API
-- `src/transform.py`: limpeza e transformação
+- `src/extract.py`: extracao dos dados da API
+- `src/transform.py`: limpeza e transformacao
 - `src/load.py`: carga no banco
-- `src/main.py`: orquestração do ETL
-- `lecture/lecture.tex`: material teórico em LaTeX
+- `src/main.py`: orquestracao do ETL
+- `lecture/lecture.tex`: material teorico em LaTeX
 
 ## Como executar
 
-### 1. Entrar na pasta do projeto
+1. Clonar o repositorio:
 
 ```bash
-cd etl_python
+git clone https://github.com/snowdutra/data-intregation.git
 ```
 
-### 2. Preparar variaveis de ambiente
+2. Entrar na pasta clonada e abrir o projeto:
+
+```bash
+cd data-intregation/etl_python
+code .
+```
+
+Se nao usar VS Code, execute apenas o comando abaixo e continue no terminal:
+
+```bash
+cd data-intregation/etl_python
+```
+
+3. Preparar variaveis de ambiente:
 
 Linux/macOS:
 ```bash
@@ -43,25 +61,23 @@ Copy-Item .env.example .env
 
 Se quiser trocar credenciais, edite DB_NAME, DB_USER e DB_PASSWORD no .env antes de subir os containers.
 
-### 3. Subir PostgreSQL
+4. Subir todo o ambiente com um unico comando (recomendado):
 
 ```bash
-docker compose up -d postgres
+docker compose up --build
 ```
 
-### 4. Executar o ETL
+Opcional para execucao em duas etapas:
+- Subir apenas banco: `docker compose up -d postgres`
+- Executar ETL: `docker compose run --rm etl_app`
 
-```bash
-docker compose run --rm etl_app
-```
-
-### 5. Acessar o banco
+5. Acessar o banco para validacao:
 
 ```bash
 docker exec -it etl_postgres psql -U <DB_USER> -d <DB_NAME>
 ```
 
-### 6. Consultar dados
+6. Consultar dados carregados:
 
 ```sql
 SELECT COUNT(*) FROM breweries;
@@ -76,9 +92,9 @@ SELECT * FROM breweries LIMIT 10;
 - README com instrucoes de execucao e validacao
 - .env.example para reproducao local
 
-## Melhorias possíveis
-- incluir tabela staging
-- incluir logs estruturados
-- adicionar testes unitários
-- agendar execução com cron ou Airflow
-- persistir dados brutos em JSON
+## Melhorias possiveis
+- Incluir tabela de staging
+- Incluir logs estruturados
+- Adicionar testes unitarios
+- Agendar execucao com cron ou Airflow
+- Persistir dados brutos em JSON

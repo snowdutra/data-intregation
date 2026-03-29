@@ -21,7 +21,7 @@
 
 - [Modelos de Machine Learning](https://github.com/snowdutra?tab=repositories&q=&type=&language=jupyter+notebook&sort=) - Experimentos de classificacao, regressao e avaliacao de performance.
 - [Data Integration ETL](https://github.com/snowdutra/data-intregation) - Pipelines de extracao, transformacao e carga com Python, Docker e banco relacional.
-- [Self Service Analytics](https://github.com/snowdutra/self-service-analytics) - Projetos de analise exploratoria, visualizacao e insights orientados a negocio.
+- [Self-Service Analytics](https://github.com/snowdutra/self-service-analytics) - Projetos de analise exploratoria, visualizacao e insights orientados a negocio.
 
 ## Stack principal
 
@@ -69,4 +69,3 @@
 </p>
 
 ---
-
