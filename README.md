@@ -1,26 +1,27 @@
 <h1 align="center">Gustavo Dutra</h1>
 
 <p align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=22&pause=1000&color=22C55E&center=true&vCenter=true&width=900&lines=Data+Scientist+%7C+Data+Engineer;Transformando+dados+em+decis%C3%B5es+inteligentes;Python%2C+SQL%2C+ETL%2C+Machine+Learning" alt="Typing SVG" />
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=22&pause=1000&color=0EA5E9&center=true&vCenter=true&width=900&lines=Data+Scientist+%7C+Data+Engineer;Transformando+dados+em+decis%C3%B5es+inteligentes;Python%2C+SQL%2C+ETL%2C+Machine+Learning" alt="Typing SVG" />
 </p>
 
-<p align="center">
-  <a href="https://github.com/snowdutra?tab=followers">
-    <img src="https://img.shields.io/github/followers/snowdutra?label=Followers&style=for-the-badge&color=0ea5e9" alt="followers" />
-  </a>
-  <a href="https://github.com/snowdutra?tab=repositories">
-    <img src="https://img.shields.io/badge/Repos-publicos-0ea5e9?style=for-the-badge" alt="repos" />
-  </a>
-  <a href="mailto:gustavo.dutra@email.com">
-    <img src="https://img.shields.io/badge/Contato-Email-22c55e?style=for-the-badge" alt="email" />
-  </a>
-</p>
 
 ## Sobre mim
 
 - Data Scientist com foco em analise de dados, automacao de pipelines e modelagem preditiva.
 - Experiencia com ETL, SQL, Python e visualizacao para gerar insights de negocio.
 - Interesse em MLOps, engenharia de dados e arquitetura orientada a dados.
+
+## Foco atual
+
+- Construindo pipelines mais robustos e escalaveis com Python + SQL.
+- Evoluindo projetos de Machine Learning para cenarios reais de negocio.
+- Fortalecendo boas praticas de engenharia de dados e automacao.
+
+## Projetos em destaque
+
+- [Modelos de Machine Learning](https://github.com/snowdutra?tab=repositories&q=&type=&language=jupyter+notebook&sort=) - Experimentos de classificacao, regressao e avaliacao de performance.
+- [Data Integration ETL](https://github.com/snowdutra/data-intregation) - Pipelines de extracao, transformacao e carga com Python, Docker e banco relacional.
+- [Self Service Analytics](https://github.com/snowdutra/self-service-analytics) - Projetos de analise exploratoria, visualizacao e insights orientados a negocio.
 
 ## Stack principal
 
@@ -39,16 +40,9 @@
 
 ## GitHub Stats
 
-
 <div align="center">
   <img src="https://github-readme-streak-stats.herokuapp.com/?user=snowdutra&theme=transparent" alt="GitHub Streak" />
 </div>
-
-## Projetos em destaque
-
-- [Modelos de Machine Learning](https://github.com/snowdutra?tab=repositories&q=&type=&language=jupyter+notebook&sort=) - Experimentos de classificacao, regressao e avaliacao de performance.
-- [Data Integration ETL](https://github.com/snowdutra/data-intregation) - Pipelines de extracao, transformacao e carga com Python, Docker e banco relacional.
-- [ETL Banco Mundial](https://github.com/snowdutra/data-intregation/tree/main/etl_bancomundial) - Pipeline completo com extracao da API do World Bank, transformacoes e carga em PostgreSQL.
 
 ## Atividade animada
 
@@ -63,11 +57,11 @@
 ## Vamos nos conectar
 
 <p align="center">
-  <a href="https://www.linkedin.com/in/seu-linkedin/" target="_blank">
+  <a href="https://www.linkedin.com/in/gustavo-dutra-/" target="_blank">
     <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn">
   </a>
-  <a href="mailto:gustavo.dutra@email.com" target="_blank">
-    <img src="https://img.shields.io/badge/Email-EA4335?style=for-the-badge&logo=gmail&logoColor=white" alt="Email">
+  <a href="mailto:gd.telles@icloud.com" target="_blank">
+    <img src="https://img.shields.io/badge/%E2%9C%89%EF%B8%8F%20Email-0ea5e9?style=for-the-badge" alt="Email">
   </a>
   <a href="https://github.com/snowdutra" target="_blank">
     <img src="https://img.shields.io/badge/GitHub-171515?style=for-the-badge&logo=github&logoColor=white" alt="GitHub">
@@ -75,8 +69,4 @@
 </p>
 
 ---
-
-<p align="center">
-  <i>"Dados contam historias. Meu trabalho e transforma-las em impacto real."</i>
-</p>
 
