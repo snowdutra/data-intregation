@@ -250,7 +250,7 @@ Resultado: contagem identica, sem duplicacao.
 
 7. A chave composta em wdi_facts garante idempotencia e foi validada por reexecucao completa do pipeline.
 
-## Checklist de aderencia ao enunciado
+## Checklist de aderencia
 - [x] ETL completo em camadas separadas (extract, transform, load)
 - [x] Uso da API do Banco Mundial v2
 - [x] Carga dos 5 indicadores obrigatorios
