@@ -251,21 +251,37 @@ Resultado: contagem identica, sem duplicacao.
 7. A chave composta em wdi_facts garante idempotencia e foi validada por reexecucao completa do pipeline.
 
 ## Checklist de aderencia
+
 - [x] ETL completo em camadas separadas (extract, transform, load)
+
 - [x] Uso da API do Banco Mundial v2
+
 - [x] Carga dos 5 indicadores obrigatorios
+
 - [x] Filtro de paises por grupos de renda LIC, MIC e HIC
+
 - [x] Regras de transformacao T1-T5 implementadas
+
 - [x] Persistencia em PostgreSQL com 3 tabelas relacionais
+
 - [x] Uso de SQLAlchemy na carga
+
 - [x] Upsert com idempotencia nas 3 tabelas
+
 - [x] Execucao via Docker Compose
+
 - [x] Evidencias de validacao com consultas SQL e segunda execucao
 
 Entregaveis incluidos no repositorio:
+
 - codigo-fonte em src/
+
 - script SQL de criacao das tabelas em db/init.sql
+
 - docker-compose.yml e Dockerfile
+
 - requirements.txt
+
 - README com instrucoes, consultas e evidencias
+
 - .env.example para reproducao da execucao

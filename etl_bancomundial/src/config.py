@@ -30,10 +30,27 @@ class Settings:
 
     # Parametros de conexao com o banco de destino.
     db_host: str = os.getenv("DB_HOST", "localhost")
-    db_port: int = int(os.getenv("DB_PORT", 5433))
-    db_name: str = os.getenv("DB_NAME", "etl_db")
-    db_user: str = os.getenv("DB_USER", "etl_user")
-    db_password: str = os.getenv("DB_PASSWORD", "etl_pass")
+    db_port: int = int(os.getenv("DB_PORT", 5432))
+    db_name: str = os.getenv("DB_NAME", "DB_NAME")
+    db_user: str = os.getenv("DB_USER", "DB_USER")
+    db_password: str = os.getenv("DB_PASSWORD", "DB_PASSWORD")
+
+    def __post_init__(self) -> None:
+        required_db_envs = {
+            "DB_NAME": self.db_name,
+            "DB_USER": self.db_user,
+            "DB_PASSWORD": self.db_password,
+        }
+        missing_or_placeholder = [
+            key
+            for key, value in required_db_envs.items()
+            if not value or value.startswith("CHANGE_ME_")
+        ]
+        if missing_or_placeholder:
+            joined = ", ".join(missing_or_placeholder)
+            raise ValueError(
+                f"Variaveis obrigatorias ausentes ou invalidas no .env: {joined}."
+            )
 
     @property
     def indicator_code_list(self) -> list[str]:
