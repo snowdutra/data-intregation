@@ -1,11 +1,13 @@
 import os
 from datetime import datetime
 from dataclasses import dataclass
+from pathlib import Path
 
 from dotenv import load_dotenv
 
 
-load_dotenv()
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+load_dotenv(dotenv_path=PROJECT_ROOT / ".env")
 
 
 @dataclass
@@ -29,14 +31,16 @@ class Settings:
     allowed_income_groups: str = os.getenv("ALLOWED_INCOME_GROUPS", "LIC,MIC,HIC")
 
     # Parametros de conexao com o banco de destino.
-    db_host: str = os.getenv("DB_HOST", "localhost")
+    db_host: str = os.getenv("DB_HOST", "")
     db_port: int = int(os.getenv("DB_PORT", 5432))
-    db_name: str = os.getenv("DB_NAME", "DB_NAME")
-    db_user: str = os.getenv("DB_USER", "DB_USER")
-    db_password: str = os.getenv("DB_PASSWORD", "DB_PASSWORD")
+    db_name: str = os.getenv("DB_NAME", "")
+    db_user: str = os.getenv("DB_USER", "")
+    db_password: str = os.getenv("DB_PASSWORD", "")
 
     def __post_init__(self) -> None:
         required_db_envs = {
+            "DB_HOST": self.db_host,
+            "DB_PORT": str(self.db_port),
             "DB_NAME": self.db_name,
             "DB_USER": self.db_user,
             "DB_PASSWORD": self.db_password,
