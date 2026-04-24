@@ -578,14 +578,3 @@ Saida:
 Interpretacao:
 - sintaxe dos blocos Python da prova esta valida
 - funcoes T1/T2/T3 da Questao 4(b) executaram e passaram nos testes
-
-### 3) Conversao para formato de entrega
-
-Comando executado:
-
-```text
-pandoc Prova_DataIntegration_SI_v2_respondida.md -o Prova_DataIntegration_SI_v2_respondida.docx
-```
-
-Arquivo gerado:
-- dados_pipelines/Prova_DataIntegration_SI_v2_respondida.docx
